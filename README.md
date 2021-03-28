@@ -47,7 +47,7 @@
 <h3>Web</h3>
 
 <p align="center">
-   <img alt="webversion" src=""/>
+   <img src="" alt="project demo gif"/>
 </p>
 
 ---

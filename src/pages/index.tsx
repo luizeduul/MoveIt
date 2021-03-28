@@ -3,12 +3,16 @@ import { GetServerSideProps } from "next";
 import { ChallengeBox } from "../components/ChallengeBox";
 import { CompletedChallenges } from "../components/CompletedChallenges";
 import { Countdown } from "../components/Countdown";
-import ExperienceBar from "../components/ExperienceBar";
+import { ExperienceBar } from "../components/ExperienceBar";
 import { Profile } from "../components/Profile";
+import { SideBar } from "../components/SideBar";
 import { CountdownProvider } from "../Contexts/CountdownContext";
 import { ChallengesProvider } from "../Contexts/ChallengesContext";
 
 import styles from "../styles/pages/Home.module.css";
+import { Login } from "../components/Login";
+import { useContext } from "react";
+import { AuthContext } from "../Contexts/AuthContext";
 
 interface HomeProps {
   level: number;
@@ -16,17 +20,24 @@ interface HomeProps {
   challengesCompleted: number;
 }
 
-export default function Home(props) {
-  return (
+export default function Home({
+  level,
+  currentExperience,
+  challengesCompleted,
+}: HomeProps) {
+  const { isLogged } = useContext(AuthContext);
+
+  return isLogged ? (
     <ChallengesProvider
-      level={props.level}
-      currentExperience={props.currents}
-      challengesCompleted={props.challengesCompleted}
+      level={level}
+      currentExperience={currentExperience}
+      challengesCompleted={challengesCompleted}
     >
       <div className={styles.container}>
         <Head>
           <title>Início | Moveit</title>
         </Head>
+        <SideBar />
         <ExperienceBar />
         <CountdownProvider>
           <section>
@@ -42,6 +53,13 @@ export default function Home(props) {
         </CountdownProvider>
       </div>
     </ChallengesProvider>
+  ) : (
+    <>
+      <Head>
+        <title>Login | Moveit</title>
+      </Head>
+      <Login />
+    </>
   );
 }
 

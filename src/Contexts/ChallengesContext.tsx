@@ -1,7 +1,9 @@
-import { createContext, useState, ReactNode, useEffect } from "react";
+import { createContext, useState, ReactNode, useEffect, useContext } from "react";
 import Cookies from 'js-cookie';
 import challenges from "../../challenges.json";
 import { LevelUpModal } from "../components/LevelUpModal";
+import { AuthContext } from "./AuthContext";
+import { realDB } from "../config/firebase";
 
 interface Challenge {
   type: "body" | "eye";
@@ -39,17 +41,30 @@ export function ChallengesProvider({ children, ...rest }: ChallengesProviderProp
   const [activeChallenge, setActiveChallenge] = useState(null);
   const [isLevelUpModalOpen, setIsLevelUpModalOpen] = useState(false);
 
+  const {user} = useContext(AuthContext);
+
   const experienceNextToLevel = Math.pow((level + 1) * 4, 2);
 
   useEffect(() => {
     Notification.requestPermission();
   }, []);
 
-  useEffect(() => {
-    Cookies.set('level', String(level));
-    Cookies.set('currentExperience', String(currentExperience));
-    Cookies.set('challengesCompleted', String(challengesCompleted));
-  } , [level, currentExperience, challengesCompleted]);
+  function writeUserData() {
+    const {uid, name, avatar} = user;
+    realDB.ref("users/" + uid).update({
+      ...user,
+      level,
+      currentExperience,
+      challengesCompleted,
+    });
+
+  }
+
+  writeUserData();
+
+  /*useEffect(() => {
+    
+  } , [level, currentExperience, challengesCompleted]);*/
 
   function levelUp() {
     setLevel(level + 1);

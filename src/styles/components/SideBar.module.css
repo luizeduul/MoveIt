@@ -1,0 +1,38 @@
+.container {
+  height: 100%;
+  width: 5.2rem;
+  left: 0;
+  bottom: 0;
+  top: 0;
+  display: flex;
+  position: fixed;
+  align-items: center;
+  justify-content: center;
+  background: var(--background-sidebar);
+  box-shadow: 12px -5px 14px -4px rgba(0,1,32,0.29);
+  flex-direction: column;
+}
+
+.logoImg{
+  top: 0;
+  margin-top: 2.2rem;
+  padding-left: 0.3rem;
+  position: fixed;
+}
+
+.buttonContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.button{
+  width: 5.2rem;
+  height: 4.4rem;
+  border: none;
+  outline: none;
+}
+
+.button:active{
+  border-left: 4px solid var(--blue);
+}

@@ -1,13 +1,13 @@
 * {
   margin: 0;
   padding: 0;
-  outline: 0;
-  -webkit-font-smoothing: antialiased;
+  box-sizing: border-box;
 }
 
 :root {
   --white: #fff;
   --background: #f2f3f5;
+  --background-sidebar: #F4F4F5;
   --gray-line: #dcdde0;
   --text: #666666;
   --text-highlight: #b3b9ff;
